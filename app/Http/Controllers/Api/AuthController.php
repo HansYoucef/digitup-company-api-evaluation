@@ -49,7 +49,7 @@ class AuthController extends Controller
         ], status: 200);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         auth()->user()->currentAccessToken()->delete();
 
