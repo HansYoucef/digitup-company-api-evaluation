@@ -11,10 +11,12 @@
 |
 */
 
+use App\Models\User;
+
 uses(
     Tests\TestCase::class,
     // Illuminate\Foundation\Testing\RefreshDatabase::class,
-)->in('Feature');
+)->in('Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +44,12 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function admin()
 {
-    // ..
+    return User::factory()->admin();
+}
+
+function user()
+{
+    return User::factory()->user();
 }
