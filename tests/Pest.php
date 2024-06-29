@@ -15,8 +15,8 @@ use App\Models\User;
 
 uses(
     Tests\TestCase::class,
-    // Illuminate\Foundation\Testing\RefreshDatabase::class,
-)->in('Unit');
+    Illuminate\Foundation\Testing\RefreshDatabase::class,
+)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
