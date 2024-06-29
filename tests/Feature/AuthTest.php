@@ -6,7 +6,7 @@ use function Pest\Laravel\postJson;
 test('register user with admin role', function () {
     $adminData = admin()->make();
 
-    $response = postJson(route('register'), [
+    $response = postJson(route('register'), data: [
         "name"                  => $adminData->name,
         "email"                 => $adminData->email,
         "password"              => $adminData->password,
@@ -26,7 +26,7 @@ test('register user with admin role', function () {
 test('register user with user role', function () {
     $userData = user()->make();
 
-    $response = postJson(route('register'), [
+    $response = postJson(route('register'), data: [
         "name"                  => $userData->name,
         "email"                 => $userData->email,
         "password"              => $userData->password,
@@ -47,7 +47,7 @@ test('register user with user role', function () {
 test('login as admin and return access token', function () {
     $admin = admin()->create();
 
-    $response = postJson(route('login'), [
+    $response = postJson(route('login'), data: [
         "email"    => $admin->email,
         "password" => 'password',
     ]);
@@ -61,7 +61,7 @@ test('login as admin and return access token', function () {
 test('login as user and return access token', function () {
     $user = user()->create();
 
-    $response = postJson(route('login'), [
+    $response = postJson(route('login'), data: [
         "email"    => $user->email,
         "password" => 'password',
     ]);
