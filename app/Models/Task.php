@@ -24,6 +24,13 @@ class Task extends Model
         'date_echeance',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'date_echeance' => 'datetime',
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
