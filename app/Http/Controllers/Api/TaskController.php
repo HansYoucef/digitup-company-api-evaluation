@@ -27,14 +27,13 @@ class TaskController extends Controller
 
         if(!empty($tasks)) {
             if($response->allowed()) {
-                return response()->json($tasks, status: 200);
+                return response()->json(['tasks' => $tasks], status: 200);
             } else {
-                return response()->json(["error" => "Accès refusé"], 403);
+                return response()->json(["error" => "Accès refusé"], status: 403);
             }
         } else {
             return response()->json(["message" => "Aucune Tâche a afficher"], status: 200);
         }
-
     }
 
     public function deleted()
@@ -43,9 +42,9 @@ class TaskController extends Controller
 
         if($response->allowed()) {
             $tasks = Task::onlyTrashed()->with('user')->get();
-            return response()->json($tasks, status: 200);
+            return response()->json(['tasks' => $tasks], status: 200);
         } else {
-            return response()->json(["error" => "Accès refusé"], 403);
+            return response()->json(["error" => "Accès refusé"], status: 403);
         }
     }
 
@@ -83,9 +82,8 @@ class TaskController extends Controller
 
             return response()->json(['message' => 'Tâche créée', 'task' => $task], status: 201);
         } else {
-            return response()->json(["error" => "Accès refusé"], 403);
+            return response()->json(["error" => "Accès refusé"], status: 403);
         }
-
     }
 
     /**
@@ -99,9 +97,9 @@ class TaskController extends Controller
             $response = Gate::inspect('view', $task);
 
             if($response->allowed()) {
-                return response()->json($task, status: 200);
+                return response()->json(['task' => $task], status: 200);
             }else {
-                return response()->json(["error" => "Accès refusé"], 403);
+                return response()->json(["error" => "Accès refusé"], status: 403);
             }
         } else {
             return response()->json(["error" => "Tâche introuvable ou supprimée"], status: 404);
@@ -117,7 +115,7 @@ class TaskController extends Controller
         
         if(!empty($task)) {
             $response = Gate::inspect('update', $task);
-            
+
             if($response->allowed()) {
                 $rules = [
                     'titre'         => 'required',
@@ -143,7 +141,7 @@ class TaskController extends Controller
                 ]);
                 return response()->json(["message" => "Tâche modifiée", "task" => $task], status: 200);
             } else {
-                return response()->json(["error" => "Accès refusé"], 403);
+                return response()->json(["error" => "Accès refusé"], status: 403);
             }
         } else {
             return response()->json(["error" => "Tâche introuvable ou supprimée"], status: 404);
@@ -158,12 +156,12 @@ class TaskController extends Controller
         $task = Task::find($id);
         if(!empty($task)) {
             $response = Gate::inspect('update', $task);
-    
+
             if($response->allowed()) {
                 $task->delete();
                 return response()->json(["message" => "Tâche supprimée"], status: 200);
             } else {
-                return response()->json(["error" => "Accès refusé"], 403);
+                return response()->json(["error" => "Accès refusé"], status: 403);
             }
         } else {
             return response()->json(["error" => "Tâche introuvable ou déja supprimée"], status: 404);
